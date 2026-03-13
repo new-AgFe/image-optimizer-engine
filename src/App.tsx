@@ -5,6 +5,7 @@ import { Activity, Wifi, SignalHigh, AlertTriangle } from 'lucide-react';
 function App() {
     const status = useNetworkStatus();
     const a = "망했다";
+    const a = "망했다";
 
     if (!status) {
         return <div className="p-10">네트워크 정보를 불러올 수 없는 브라우저입니다.</div>;
