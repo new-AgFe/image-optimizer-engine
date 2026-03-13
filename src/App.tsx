@@ -1,28 +1,33 @@
 // src/App.tsx
 import { useNetworkStatus } from './hooks/useNetworkStatus';
+import { useMemo } from 'react';
 import { Activity, Wifi, SignalHigh, AlertTriangle } from 'lucide-react';
 
 function App() {
     const status = useNetworkStatus();
 
-    // 1. 최적화하고 싶은 원본 이미지 주소를 변수로 둡니다.
-    const ORIGINAL_IMAGE_URL = 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba'; // 예쁜 고양이 사진
-
-    // 2. 서버 주소와 파라미터를 조합합니다.
-    const optimizedSrc = `http://localhost:3000/api/image?url=${encodeURIComponent(ORIGINAL_IMAGE_URL)}&network=${status.effectiveType}`;
+    const optimizedImageSrc = useMemo(() => {
+        if (!status) return '';
+        
+        const ORIGINAL_URL = 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba'; // 예시: 고양이
+        const serverBaseUrl = 'http://localhost:3000/api/image';
+        
+        // encodeURIComponent를 써야 원본 URL 내의 특수문자가 깨지지 않습니다.
+        return `${serverBaseUrl}?url=${encodeURIComponent(ORIGINAL_URL)}&network=${status.effectiveType}`;
+    }, [status?.effectiveType]);
 
     if (!status) {
         return <div className="p-10">네트워크 정보를 불러올 수 없는 브라우저입니다.</div>;
     }
 
     return (
-        <div className="mt-12 w-full max-w-2xl bg-white p-6 rounded-2xl shadow-md">
+        <div className="min-h-screen w-full bg-gray-100 p-4 md:p-8 flex flex-col items-center">
             <h2 className="text-xl font-semibold mb-4">🖼️ AI Smart Optimized Image</h2>
             
             <div className="relative aspect-video bg-gray-200 rounded-lg overflow-hidden border">
                 <img 
-                    key={status.effectiveType} // 상태 바뀔 때마다 이미지 새로고침 강제
-                    src={optimizedSrc}
+                    key={optimizedImageSrc} // 상태 바뀔 때마다 이미지 새로고침 강제
+                    src={optimizedImageSrc}
                     alt="AI Optimized"
                     className="w-full h-full object-cover transition-opacity duration-500"
                 />
@@ -33,7 +38,7 @@ function App() {
             </div>
 
             <div className="mt-4 text-xs text-gray-400 break-all bg-gray-50 p-2 rounded">
-                <b>Request URL:</b> {optimizedSrc}
+                <b>Request URL:</b> {optimizedImageSrc}
             </div>
         </div>
     );
