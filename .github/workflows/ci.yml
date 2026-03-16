@@ -1,0 +1,44 @@
+name: AI Code Reviewer CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+
+    steps:
+      # 1. 현재 프로젝트(이미지 엔진) 코드 체크아웃
+      - name: Checkout Current Repo
+        uses: actions/checkout@v4
+        with:
+          path: current-repo
+          fetch-depth: 0
+
+      # 2. 리뷰 봇이 들어있는 원본 레포지토리 체크아웃
+      - name: Checkout AI Reviewer Repo
+        uses: actions/checkout@v4
+        with:
+          repository: new-AgFe/ai-code-reviewer # 사용자님의 봇 레포 주소
+          path: reviewer-bot
+          token: ${{ secrets.GH_PAT }} # 다른 레포를 가져오기 위한 권한 (아래 설명 참고)
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 3. 리뷰 봇 폴더로 이동해서 설치 및 실행
+      - name: Run AI Review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          cd reviewer-bot
+          npm install
+          # 리뷰 대상 디렉토리를 환경변수로 알려주거나 스크립트를 그에 맞게 실행
+          node scripts/review.js ../current-repo
