@@ -1,12 +1,18 @@
+/* src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* 사수의 조언: 최소한의 기본 베이스만 남기기 */
 :root {
-  width: 100%;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: #f9fafb; /* bg-gray-50 */
 }
 
 body {
   margin: 0;
-  width: 100%;
+  display: flex;
+  place-items: initial; /* Vite 기본 설정 해제 */
+  min-width: 320px;
+  min-height: 100vh;
 }
