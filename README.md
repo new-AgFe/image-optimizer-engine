@@ -1,73 +1,20 @@
-# React + TypeScript + Vite
+# 🖼️ AI-Powered Adaptive Image Optimizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+네트워크 상태를 실시간으로 감지하여, Gemini AI를 통해 이미지의 핵심 피사체를 분석하고 최적화된 크롭/압축 이미지를 서빙하는 지능형 엔진입니다.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
+- **Real-time Network Detection**: 브라우저 API를 통한 사용자 대역폭(4G, 3G, 2G) 실시간 감지.
+- **AI Smart Cropping**: Gemini 1.5 Flash를 사용하여 이미지 내 핵심 피사체 좌표 추출.
+- **On-the-fly Processing**: Sharp 라이브러리를 이용한 서버 사이드 실시간 이미지 가공.
+- **Automated Code Review**: GitHub Actions와 Gemini를 연동한 중앙 집중식 AI 코드 리뷰 시스템 구축.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🏗️ System Architecture
+사용자 환경에 따라 데이터 흐름이 유기적으로 변화하는 구조입니다.
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠️ Tech Stack
+- **Frontend**: React, TypeScript, Tailwind CSS (v4)
+- **Backend**: Node.js, Express, Sharp
+- **AI**: Google Gemini API (Multimodal)
+- **DevOps**: GitHub Actions (Custom CI Workflow)
